@@ -21,6 +21,7 @@ describe Foy::API::Client::Base do
 
     it "calls /v1/projects.json" do
       Foy::API::Client::Base.get_projects
+      WebMock.should have_requested(:get, "http://localhost:5000/v1/projects.json")
     end
 
     it "returns an array" do
