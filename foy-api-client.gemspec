@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_development_dependency('rspec', '>= 2.14.1')
+  gem.add_development_dependency('webmock', '>= 1.17.1')
 
   gem.add_dependency('rest-client', '>= 1.6.7')
 end

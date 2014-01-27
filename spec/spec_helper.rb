@@ -6,3 +6,4 @@ RSpec.configure do |config|
 end
 
 require 'foy_api_client'
+require 'webmock/rspec'
