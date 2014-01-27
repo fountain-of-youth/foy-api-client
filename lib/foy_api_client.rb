@@ -13,6 +13,10 @@ module Foy
             OpenStruct.new(element)
           end
         end
+
+        def self.put_project_packages(project_id, packages)
+          RestClient.put "http://localhost:5000/v1/projects/#{project_id}/packages.json", packages.to_json
+        end
       end
     end
   end
