@@ -19,6 +19,10 @@ module Foy
           parse_collection(json_data)
         end
 
+        def self.put_packages(system: system, packages: [])
+          RestClient.put "http://localhost:5000/v1/packages/#{system}.json", {packages: packages}.to_json, {accept: :json, content_type: :json}
+        end
+
         private
 
         def self.parse_collection(json_data)
