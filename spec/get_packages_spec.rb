@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Foy::API::Client::Base do
   describe ".get_packages" do
+    subject do
+      Foy::API::Client::Base.new 'base'
+    end
+
     let(:data) do
       {
         name: "rspec",
@@ -18,22 +22,22 @@ describe Foy::API::Client::Base do
     end
 
     before do
-      stub_request(:get, "http://localhost:5000/v1/packages/#{system}.json").
+      stub_request(:get, "base/v1/packages/#{system}.json").
          to_return(status: 200, body: data_json)
     end
 
     it "calls /v1/projects.json" do
-      Foy::API::Client::Base.get_packages(system: system)
-      WebMock.should have_requested(:get, "http://localhost:5000/v1/packages/#{system}.json")
+      subject.get_packages(system: system)
+      WebMock.should have_requested(:get, "base/v1/packages/#{system}.json")
     end
 
     it "returns an array" do
-      result = Foy::API::Client::Base.get_packages(system: system)
+      result = subject.get_packages(system: system)
       expect(result).to be_an(Array)
     end
 
     it "returns data as OpenStruct" do
-      result = Foy::API::Client::Base.get_packages(system: system)
+      result = subject.get_packages(system: system)
       expect(result.first).to be == OpenStruct.new(data)
     end
   end

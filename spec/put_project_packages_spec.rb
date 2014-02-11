@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe Foy::API::Client::Base do
-  describe ".put_project_packages" do
+  describe "#put_project_packages" do
+    subject do
+      Foy::API::Client::Base.new 'base'
+    end
+
     let(:project_id) do
       "321"
     end
@@ -23,18 +27,18 @@ describe Foy::API::Client::Base do
     end
 
     it "calls put /v1/projects/:id/packages.json?system=rubygems" do
-      Foy::API::Client::Base.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
-      WebMock.should have_requested(:put, "http://localhost:5000/v1/projects/321/packages.json").with(query: {system: "rubygems"})
+      subject.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
+      WebMock.should have_requested(:put, "base/v1/projects/321/packages.json").with(query: {system: "rubygems"})
     end
 
     it "sends data as json" do
-      Foy::API::Client::Base.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
+      subject.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
       WebMock.should have_requested(:put, /.*/).
         with(body: {packages: data}.to_json)
     end
 
     it "indicates content as json" do
-      Foy::API::Client::Base.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
+      subject.put_project_packages(project_id: project_id, packages: data, system: 'rubygems')
       WebMock.should have_requested(:put, /.*/).
         with(headers: {"Content-Type" => 'application/json'})
     end
